@@ -48,22 +48,11 @@
         categories: [],
         // 富文本框参数设置
         editorOption: {
-          modules: {
-            ImageExtend: {
-              loading: true,
-              name: 'img',
-              action: 'https://qiniu.com',
-              response: (res) => {
-                return res.info
-              }
-            },
-            toolbar: {
-              container: container,
-              handlers: {
-                'image': function () {
-                  QuillWatch.emit(this.quill.id)
-                }
-              }
+          uploadConfig: {
+            token: 'hiaSMM1QqBT-0Q0KywiDrpp_tXbgBz8p1mFXkoil:h6RXhGWohEGKS_GzVPbwPUpuHiE=:eyJyZXR1cm5Cb2R5Ijoie1wia2V5XCI6ICQoa2V5KSwgXCJoYXNoXCI6ICQoZXRhZyksIFwidXJsXCI6IFwiaHR0cDovL3BibC55YW9qdW5yb25nLmNvbS8kKGtleSlcIn0iLCJzY29wZSI6InB1YmxpYyIsImRlYWRsaW5lIjoxNTM4MTkwNzUyfQ==',
+            action: 'https://upload-z1.qiniup.com',
+            res: (respnse) => {
+              return respnse.url
             }
           }
         }

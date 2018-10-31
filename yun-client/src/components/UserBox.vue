@@ -1,6 +1,6 @@
 <template>
   <div class="user-box">
-    <div v-if="!isLogin">
+    <div v-if="!userInfo.username">
       <div class="mb30">
         <el-input placeholder="邮箱" v-model="form.email"></el-input>
       </div>
@@ -21,9 +21,12 @@
           <p>萌新：{{userInfo.username}}</p>
         </div>
         <p>邮箱:{{userInfo.email}}</p>
-        <p>个性签名: {{userInfo.desc}}</p>
+        <p>个性签名:
+          <strong v-if="userInfo.desc">{{userInfo.desc}}</strong>
+          <strong v-else>这家伙很懒，什么都没留下</strong>
+        </p>
       </div>
-      <el-button type="warning" style="margin-top: 30px;width: 100%" @click="quitLogin">退出登录</el-button>
+      <el-button class="quitbtn" type="warning" style="margin-top: 30px;width: 100%" @click="quitLogin">退出登录</el-button>
     </div>
   </div>
 </template>
@@ -35,8 +38,7 @@
           form: {
             email: '',
             password: ''
-          },
-          isLogin: false
+          }
         }
       },
       methods: {
@@ -45,7 +47,6 @@
             if(res.code == 200) {
               this.$message.success(res.msg)
               this.$store.commit('CHANGE_INFO', res.data)
-              this.isLogin = true
             }else {
               this.$message.error(res.msg)
             }
@@ -53,12 +54,18 @@
         },
         quitLogin() {
           this.$axios.post('/user/quitlogin').then(res => {
+            let userInfo = {
+              avatar: '',
+              desc: '',
+              email: '',
+              username: '',
+            }
             if(res.code == 200){
-              this.isLogin = false
               this.$message.success(res.msg)
-              this.$store.commit('CHANGE_INFO', null)
+              this.$store.commit('CHANGE_INFO', userInfo)
             }else {
               this.$message.error(res.msg)
+              this.$store.commit('CHANGE_INFO', userInfo)
             }
           })
         }
@@ -69,9 +76,7 @@
         }
       },
       created() {
-        if(this.$store.state.userInfo) {
-          this.isLogin = true
-        }
+
       }
     }
 </script>
@@ -100,6 +105,13 @@
     p {
       margin-top: 20px;
     }
+
+    strong {
+      font-weight: 400;
+      font-size: 14px;
+      color: #555;
+    }
+
     .avatar {
       display: flex;
 
@@ -108,6 +120,6 @@
         height: 100px;
       }
     }
-
   }
+
 </style>

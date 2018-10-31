@@ -4,7 +4,7 @@ var article = require('../model/article')
 
 //获取笔记接口
 router.get('/', (req, res) => {
-    let {pn=1, size=5} = req.query
+    let {pn=1, size=10} = req.query
     pn=parseInt(pn)
     size=parseInt(size)
     article.find().populate({path: 'author', select: {password: 0, email: 0}}).sort({_id: -1}).then(data => {

@@ -1,10 +1,12 @@
 <template>
   <div class="article">
     <div class="author">
-      <img :src="form.author.avatar" >
+      <div class="img">
+        <img :src="form.author.avatar" >
+      </div>
       <div class="text">
         <p class="title">{{form.title}}</p>
-        <p class="looknums">{{form.createdAt.substring(0,10)}} 阅读：{{form.looknums}}</p>
+        <p class="looknums">{{form.createdAt.substring(0,10)}} 阅读：{{form.looknums}} 作者：{{form.author.username}}</p>
       </div>
     </div>
     <div class="content" v-html="form.content"></div>
@@ -31,12 +33,14 @@
           id: '',
           form: {
             author: {
-              avatar: ''
+              avatar: '',
+              username: ''
             },
             title: '',
             createdAt: '',
             looknums: '',
             content: '',
+            comments: []
           },
           commenttext: ''
         }
@@ -73,7 +77,7 @@
 <style scoped lang="scss">
   .article {
     width: 760px;
-    margin: 40px auto 0;
+    margin: 40px auto;
     background-color: #fff;
     border-radius: 6px;
     padding: 20px 40px;
@@ -83,9 +87,16 @@
   .author {
     display: flex;
 
-    img {
+    .img {
       width: 60px;
       height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 60px;
+        height: 60px;
+      }
     }
 
     .text {

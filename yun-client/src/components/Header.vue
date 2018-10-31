@@ -11,7 +11,7 @@
     export default {
         methods: {
           handleGO() {
-            if(this.$store.state.userInfo) {
+            if(this.$store.state.userInfo.username) {
               this.$router.push('/write')
             }else {
               this.$message.error('登录之后才能写笔记')
